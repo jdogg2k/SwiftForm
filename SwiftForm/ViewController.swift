@@ -9,12 +9,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
     
+    @IBOutlet var appsTableView : UITableView
     var data: NSMutableData = NSMutableData()
     var tableData: NSArray = NSArray()
     
-    @IBOutlet var appsTableView : UITableView
+    
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
@@ -37,8 +38,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // Get the formatted price string for display in the subtitle
         var formattedPrice: NSString = rowData["formattedPrice"] as NSString
+        var averageRating: Double = rowData["averageUserRating"] as Double
         
-        cell.detailTextLabel.text = formattedPrice
+        cell.detailTextLabel.text = formattedPrice + " | " + String(averageRating)
         
         return cell
     }
@@ -73,13 +75,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func connectionDidFinishLoading(connection: NSURLConnection!) {
         // Request complete, self.data should now hold the resulting info
         // Convert the retrieved data in to an object through JSON deserialization
+        var dataAsString: NSString = NSString(data: self.data, encoding: NSUTF8StringEncoding)
+        
+        // Convert the retrieved data in to an object through JSON deserialization
         var err: NSError
-        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options:    NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
         
         if jsonResult.count>0 && jsonResult["results"].count>0 {
             var results: NSArray = jsonResult["results"] as NSArray
             self.tableData = results
-            //self.appsTableView.reloadData() NOT WORKING
+            self.appsTableView.reloadData()
             
         }
     }
@@ -87,7 +92,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        searchItunesFor("Rovio")
+        searchItunesFor("Noodlecake")
     }
 
     override func didReceiveMemoryWarning() {
