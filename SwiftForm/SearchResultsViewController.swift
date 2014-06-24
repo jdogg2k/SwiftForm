@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class SearchResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
     
@@ -18,7 +19,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     var imageCache = NSMutableDictionary()
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject) {
-        var detailsViewController: DetailsViewController = segue.destinationViewController as DetailsViewController
+        var detailsViewController = segue.destinationViewController as DetailsViewController
         var albumIndex = appsTableView.indexPathForSelectedRow().row
         var selectedAlbum = self.albums[albumIndex]
         detailsViewController.album = selectedAlbum
@@ -30,11 +31,12 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let kCellIdentifier: String = "SearchResultCell"
-        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as UITableViewCell
         
         // Find this cell's album by passing in the indexPath.row to the subscript method for an array of type Album[]
         let album = self.albums[indexPath.row]
         cell.text = album.title
+        println(album.title)
         cell.image = UIImage(named: "Blank52")
         cell.detailTextLabel.text = album.price
         
@@ -50,7 +52,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
             
             if( !image? ) {
                 // If the image does not exist, we need to download it
-                let imgURL: NSURL = NSURL(string: urlString)
+                let imgURL = NSURL(string: urlString)
                 
                 // Download an NSData representation of the image at the URL
                 let request: NSURLRequest = NSURLRequest(URL: imgURL)
@@ -86,10 +88,16 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         return cell
     }
     
-    func didRecieveAPIResults(results: NSDictionary) {
+    func tableView(tableView: UITableView!, willDisplayCell cell: UITableViewCell!, forRowAtIndexPath indexPath: NSIndexPath!) {
+        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animateWithDuration(0.25, animations: {
+            cell.layer.transform = CATransform3DMakeScale(1,1,1)
+            })
+    }
+    
+    func didReceiveAPIResults(results: NSDictionary) {
         // Store the results in our table data array
         if results.count>0 {
-            
             let allResults: NSDictionary[] = results["results"] as NSDictionary[]
             
             // Sometimes iTunes returns a collection, not a track, so we check both for the 'name'
@@ -99,7 +107,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
                 if !name? {
                     name = result["collectionName"] as? String
                 }
-                
+                println(name)
                 // Sometimes price comes in as formattedPrice, sometimes as collectionPrice.. and sometimes it's a float instead of a string. Hooray!
                 var price: String? = result["formattedPrice"] as? String
                 if !price? {
@@ -123,7 +131,9 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
                     itemURL = result["trackViewUrl"] as? String
                 }
                 
-                var newAlbum = Album(name: name!, price: price!, thumbnailImageURL: thumbnailURL!, largeImageURL: imageURL!, itemURL: itemURL!, artistURL: artistURL!)
+                var collectionId = result["collectionId"] as? Int
+                
+                var newAlbum = Album(name: name!, price: price!, thumbnailImageURL: thumbnailURL!, largeImageURL: imageURL!, itemURL: itemURL!, artistURL: artistURL!, collectionId: collectionId!)
                 albums.append(newAlbum)
             }
             
@@ -140,7 +150,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         // Do any additional setup after loading the view, typically from a nib.
         self.api = APIController(delegate: self)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        self.api!.searchItunesFor("Bob Dylan");
+        self.api!.searchItunesFor("Coldplay")
     }
 
     override func didReceiveMemoryWarning() {
