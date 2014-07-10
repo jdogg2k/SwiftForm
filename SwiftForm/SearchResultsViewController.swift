@@ -36,7 +36,6 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         // Find this cell's album by passing in the indexPath.row to the subscript method for an array of type Album[]
         let album = self.albums[indexPath.row]
         cell.text = album.title
-        println(album.title)
         cell.image = UIImage(named: "Blank52")
         cell.detailTextLabel.text = album.price
         
@@ -105,7 +104,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
                 
                 var name: String? = result["trackName"] as? String
                 if !name? {
-                    name = result["collectionName"] as? String
+                  name = result["collectionName"] as? String
                 }
                 println(name)
                 // Sometimes price comes in as formattedPrice, sometimes as collectionPrice.. and sometimes it's a float instead of a string. Hooray!
@@ -124,7 +123,10 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
                 
                 let thumbnailURL: String? = result["artworkUrl60"] as? String
                 let imageURL: String? = result["artworkUrl100"] as? String
-                let artistURL: String? = result["artistViewUrl"] as? String
+                var artistURL: String? = result["artistViewUrl"] as? String
+                if !artistURL? {
+                    artistURL = "none"
+                }
                 
                 var itemURL: String? = result["collectionViewUrl"] as? String
                 if !itemURL? {
@@ -150,7 +152,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         // Do any additional setup after loading the view, typically from a nib.
         self.api = APIController(delegate: self)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        self.api!.searchItunesFor("Coldplay")
+        self.api!.searchItunesFor("Sia")
     }
 
     override func didReceiveMemoryWarning() {

@@ -9,6 +9,6 @@
 import UIKit
 
 class TrackCell: UITableViewCell {
-    @IBOutlet var playIcon: UILabel
+    @IBOutlet var iconView: PlayPauseIconView
     @IBOutlet var titleLabel: UILabel
 }

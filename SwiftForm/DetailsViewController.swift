@@ -46,7 +46,7 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         var track = tracks[indexPath.row]
         cell.titleLabel.text = track.title
-        cell.playIcon.text = "▶️"
+        //cell.iconView.isPlaying = true
         
         return cell
     }
@@ -56,12 +56,12 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         mediaPlayer.stop()
         
         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? TrackCell {
-            if cell.playIcon.text == "🔇" {
-                cell.playIcon.text = "▶️"
+            if cell.iconView.isPlaying {
+                //cell.iconView.isPlaying = false
             } else {
                 mediaPlayer.contentURL = NSURL(string: track.previewUrl)
                 mediaPlayer.play()
-                cell.playIcon.text = "🔇"
+                //cell.iconView.isPlaying = true
             }
         }
     }

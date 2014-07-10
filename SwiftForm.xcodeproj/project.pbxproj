@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B10FE5691958B90000A11DB4 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10FE5681958B90000A11DB4 /* Track.swift */; };
 		B10FE56B195A188B00A11DB4 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10FE56A195A188B00A11DB4 /* TrackCell.swift */; };
+		B17508D5196DD4AD00BA8135 /* PlayPauseIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17508D4196DD4AD00BA8135 /* PlayPauseIconView.swift */; };
 		B198B8D0194606A800DDE986 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = B198B8CF194606A800DDE986 /* Album.swift */; };
 		B198B8D219460A5800DDE986 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B198B8D119460A5800DDE986 /* DetailsViewController.swift */; };
 		B1DC7EE119421473005195BF /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DC7EE019421473005195BF /* APIController.swift */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		B10FE5681958B90000A11DB4 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		B10FE56A195A188B00A11DB4 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
+		B17508D4196DD4AD00BA8135 /* PlayPauseIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPauseIconView.swift; sourceTree = "<group>"; };
 		B198B8CF194606A800DDE986 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		B198B8D119460A5800DDE986 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		B1DC7EE019421473005195BF /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				B198B8D119460A5800DDE986 /* DetailsViewController.swift */,
 				B10FE5681958B90000A11DB4 /* Track.swift */,
 				B10FE56A195A188B00A11DB4 /* TrackCell.swift */,
+				B17508D4196DD4AD00BA8135 /* PlayPauseIconView.swift */,
 			);
 			path = SwiftForm;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 			files = (
 				B10FE56B195A188B00A11DB4 /* TrackCell.swift in Sources */,
 				B1E86C01193F9C1F0098CF75 /* SearchResultsViewController.swift in Sources */,
+				B17508D5196DD4AD00BA8135 /* PlayPauseIconView.swift in Sources */,
 				B1E86BFF193F9C1F0098CF75 /* AppDelegate.swift in Sources */,
 				B1DC7EE119421473005195BF /* APIController.swift in Sources */,
 				B198B8D0194606A800DDE986 /* Album.swift in Sources */,
