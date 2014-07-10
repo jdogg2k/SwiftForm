@@ -57,11 +57,11 @@ class DetailsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? TrackCell {
             if cell.iconView.isPlaying {
-                //cell.iconView.isPlaying = false
+                cell.iconView.isPlaying = false
             } else {
                 mediaPlayer.contentURL = NSURL(string: track.previewUrl)
                 mediaPlayer.play()
-                //cell.iconView.isPlaying = true
+                cell.iconView.isPlaying = true
             }
         }
     }
