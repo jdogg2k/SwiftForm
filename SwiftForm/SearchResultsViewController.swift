@@ -13,6 +13,8 @@ import QuartzCore
 class SearchResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
     
     var api: APIController?
+    @IBOutlet var searchButton : UIButton
+    @IBOutlet var searchField : UITextField
     @IBOutlet var appsTableView : UITableView
     var data: NSMutableData = NSMutableData()
     var albums: Album[] = []
@@ -28,6 +30,7 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         return albums.count
     }
+
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let kCellIdentifier: String = "SearchResultCell"
@@ -150,11 +153,15 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.api = APIController(delegate: self)
+        
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        self.api!.searchItunesFor("Sia")
+        
     }
 
+    @IBAction func searchArtist(sender : UIButton) {
+        self.api = APIController(delegate: self)
+        self.api!.searchItunesFor(searchField.text)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
