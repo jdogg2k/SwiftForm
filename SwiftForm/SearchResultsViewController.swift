@@ -142,8 +142,16 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
                 albums.append(newAlbum)
             }
             
-            
-            self.appsTableView.reloadData()
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0),
+                {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.appsTableView.reloadData()
+                        
+                        })
+                    
+                }
+            )
+
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
@@ -157,9 +165,18 @@ class SearchResultsViewController: UIViewController, UITableViewDataSource, UITa
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
     }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool
+    {
+        self.api = APIController(delegate: self)
+        albums.removeAll(keepCapacity: true)
+        self.api!.searchItunesFor(searchField.text)
+        return true;
+    }
 
     @IBAction func searchArtist(sender : UIButton) {
         self.api = APIController(delegate: self)
+        albums.removeAll(keepCapacity: true)
         self.api!.searchItunesFor(searchField.text)
     }
     override func didReceiveMemoryWarning() {
